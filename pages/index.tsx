@@ -1,17 +1,18 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import styles from "../styles/Home.module.css";
+
+// components
+import { StyledText } from "../components/common/basic";
 
 const Home: NextPage = () => {
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <title>Fale Wash - Laundry Service</title>
         <meta name='description' content='Delivery at your door step' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-
-      <p>Home</p>
+      <StyledText>Home</StyledText>
     </div>
   );
 };

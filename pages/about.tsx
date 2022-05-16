@@ -1,8 +1,10 @@
 import type { NextPage } from "next";
-import { ServerStyleSheet } from "styled-components";
+
+// components
+import { StyledText } from "../components/common/basic";
 
 const About: NextPage = () => {
-  return <p>About</p>;
+  return <StyledText>About</StyledText>;
 };
 
 export default About;
