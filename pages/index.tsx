@@ -1,10 +1,19 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import { useEffect } from "react";
+import { logEvent, getAnalytics } from "firebase/analytics";
 
 // components
 import { StyledText } from "../components/common/basic";
 
+// config
+
 const Home: NextPage = () => {
+  useEffect(() => {
+    const analytics = getAnalytics();
+    logEvent(analytics, "home_loaded");
+  }, []);
+
   return (
     <div>
       <Head>

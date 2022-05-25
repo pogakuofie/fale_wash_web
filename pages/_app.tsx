@@ -1,9 +1,12 @@
 import type { AppProps } from "next/app";
-
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 
-const GlobalStyle = createGlobalStyle`
+// config
 
+// context
+import { AuthContextProvider } from "../context/AuthContext";
+
+const GlobalStyle = createGlobalStyle`
 html,
 body {
   padding: 0;
@@ -36,12 +39,12 @@ const theme: ThemeInterface = {
 
 function App({ Component, pageProps }: AppProps) {
   return (
-    <>
+    <AuthContextProvider>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
         <Component {...pageProps} />
       </ThemeProvider>
-    </>
+    </AuthContextProvider>
   );
 }
 
