@@ -16,6 +16,6 @@
     "incremental": true,
     "removeComments": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/common/basic.js"],
   "exclude": ["node_modules"]
 }

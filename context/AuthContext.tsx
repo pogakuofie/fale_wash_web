@@ -21,17 +21,18 @@ export const AuthContextProvider = ({
 }) => {
   const [user, setUser] = useState<any>(null);
   const [confirmResult, setConfirmResult] = useState<any>(null);
-  const [appVerifier, setAppVerifier] = useState<any>(null);
+  // const [appVerifier, setAppVerifier] = useState<any>(null);
 
   const app = createFirebaseApp();
+
   const auth = getAuth(app);
 
   auth.languageCode = "en";
 
   useEffect(() => {}, []);
 
-  const login = () => {
-    signInWithPhoneNumber(auth, "+233547557948", appVerifier)
+  const login = (appVerifier: any) => {
+    signInWithPhoneNumber(auth, "+233517557948", appVerifier)
       .then((confirmationResult) => {
         setConfirmResult(confirmationResult);
         console.log("confirmationResult", confirmationResult);
@@ -47,21 +48,21 @@ export const AuthContextProvider = ({
   };
 
   const recaptchaVerifier = () => {
-    const recaptcha = new RecaptchaVerifier(
+    const appVerifier = new RecaptchaVerifier(
       "recaptcha-container",
       {
         size: "invisible",
         callback: (response: any) => {
-          console.log(response);
+          console.log("response", response);
         },
         "expired-callback": () => {
           console.log("expired");
         },
       },
       auth
-    ).verify();
+    );
 
-    setAppVerifier(recaptcha);
+    login(appVerifier);
   };
 
   return (
