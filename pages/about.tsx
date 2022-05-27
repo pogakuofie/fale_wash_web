@@ -6,7 +6,7 @@ import PageContainer from "../components/common/page";
 
 const About: NextPage = () => {
   return (
-    <PageContainer>
+    <PageContainer title={"Fale Wash - About us and our motivations"}>
       <StyledText>Hi, About</StyledText>
     </PageContainer>
   );
