@@ -1,5 +1,15 @@
 import styled from "styled-components";
 
+// interface Texted {
+//   size: number | undefined;
+//   align: string | undefined;
+//   height: number | undefined;
+//   margin: number | undefined;
+//   weight: number | undefined;
+//   spacing: number | undefined;
+//   pointer: string | undefined;
+// }
+
 const StyledText = styled.p`
   font-size: ${({ size }) => `${size}px`};
   align-self: center;
