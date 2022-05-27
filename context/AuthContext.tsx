@@ -35,6 +35,7 @@ export const AuthContextProvider = ({
     signInWithPhoneNumber(auth, "+233517557948", appVerifier)
       .then((confirmationResult) => {
         setConfirmResult(confirmationResult);
+
         console.log("confirmationResult", confirmationResult);
       })
       .catch((error) => {
