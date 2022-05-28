@@ -6,7 +6,6 @@ import { useEffect } from "react";
 
 // hooks
 import { useAuth } from "../context/AuthContext";
-import CustomHead from "../components/common/head";
 import PageContainer from "../components/common/page";
 
 const Login: NextPage = () => {
