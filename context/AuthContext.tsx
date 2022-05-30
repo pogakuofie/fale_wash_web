@@ -5,6 +5,7 @@ import {
   signOut,
   getAuth,
 } from "firebase/auth";
+import parsePhoneNumber from "libphonenumber-js";
 
 // config
 import { createFirebaseApp } from "../config/firebase";
@@ -21,7 +22,9 @@ export const AuthContextProvider = ({
 }) => {
   const [user, setUser] = useState<any>(null);
   const [confirmResult, setConfirmResult] = useState<any>(null);
-  // const [appVerifier, setAppVerifier] = useState<any>(null);
+  const [phoneNumber, setPhoneNumber] = useState<string | null>(null);
+  const [countryCode, setCountryCode] = useState<string | null>("+233");
+  const [optCode, setOTPCode] = useState<string | null>(null);
 
   const app = createFirebaseApp();
 
@@ -31,16 +34,17 @@ export const AuthContextProvider = ({
 
   useEffect(() => {}, []);
 
-  const login = (appVerifier: any) => {
-    signInWithPhoneNumber(auth, "+233517557948", appVerifier)
-      .then((confirmationResult) => {
-        setConfirmResult(confirmationResult);
+  const sendOTP = (appVerifier: any) => {
+    const parsed = parsePhoneNumber(`${countryCode}${phoneNumber}`);
 
-        console.log("confirmationResult", confirmationResult);
-      })
-      .catch((error) => {
-        console.log("sms error", error);
-      });
+    const { number, isValid } = parsed || {};
+
+    if (parsed?.isValid())
+      signInWithPhoneNumber(auth, parsed?.number, appVerifier)
+        .then((confirmationResult) => {
+          setConfirmResult(confirmationResult);
+        })
+        .catch((error) => {});
   };
 
   const logout = async () => {
@@ -53,21 +57,40 @@ export const AuthContextProvider = ({
       "recaptcha-container",
       {
         size: "invisible",
-        callback: (response: any) => {
-          console.log("response", response);
-        },
-        "expired-callback": () => {
-          console.log("expired");
-        },
+        callback: (response: any) => {},
+        "expired-callback": () => {},
       },
       auth
     );
 
-    login(appVerifier);
+    sendOTP(appVerifier);
+  };
+
+  const login = () => {
+    confirmResult
+      .confirm(optCode)
+      .then((result: any) => {
+        const { user } = result;
+
+        setUser(user);
+      })
+      .catch((error: any) => {});
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, recaptchaVerifier }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        logout,
+        recaptchaVerifier,
+        phoneNumber,
+        setPhoneNumber,
+        countryCode,
+        setCountryCode,
+        setOTPCode,
+        login,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
