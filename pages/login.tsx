@@ -1,24 +1,25 @@
 import type { NextPage } from "next";
+import { useRouter } from "next/router";
 
 // components
 import { StyledText } from "../components/common/basic";
-import { useEffect } from "react";
+import PageContainer from "../components/common/page";
 
 // hooks
 import { useAuth } from "../context/AuthContext";
-import PageContainer from "../components/common/page";
 
 const Login: NextPage = () => {
-  useEffect(() => {}, []);
+  const { recaptchaVerifier, setPhoneNumber, setOTPCode, login, isLoggedIn } =
+    useAuth();
 
-  const { recaptchaVerifier, setPhoneNumber, setOTPCode, login } = useAuth();
+  const router = useRouter();
 
   return (
     <PageContainer>
       <StyledText>Hi, Login</StyledText>
       <div style={{}} id='sign-in-button'></div>
       <div id='recaptcha-container'></div>
-      {/* <input
+      <input
         type={"text"}
         maxLength={10}
         onChange={({ target }) => {
@@ -48,7 +49,14 @@ const Login: NextPage = () => {
         }}
       >
         Verify
-      </button> */}
+      </button>
+      <button
+        onClick={() => {
+          if (isLoggedIn) router.push("/dashboard");
+        }}
+      >
+        Dashboard
+      </button>
     </PageContainer>
   );
 };

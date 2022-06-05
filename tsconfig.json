@@ -21,6 +21,6 @@
     "**/*.ts",
     "**/*.tsx",
     "components/common/basic.ts"
-, "lib/dbConnect.js"  ],
+, "config/dbConnect.js"  ],
   "exclude": ["node_modules"]
 }
