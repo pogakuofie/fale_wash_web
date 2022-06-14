@@ -23,14 +23,11 @@ export const createFirebaseApp = () => {
 
       if ("messagingSenderId" in clientCredentials) {
         if (Notification.permission === "granted") {
-          console.log("was granted");
-          const messaging = getMessaging(app);
-
-          const token = getToken(messaging);
+          // const messaging = getMessaging(app);
+          // const token = getToken(messaging);
         } else if (Notification.permission === "default") {
           Notification.requestPermission().then(function (status) {
             if (status === "denied") {
-              console.log("denied");
             } else if (status === "granted") {
               const messaging = getMessaging(app);
 

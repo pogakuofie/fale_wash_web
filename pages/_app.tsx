@@ -6,7 +6,6 @@ import { createFirebaseApp } from "../config/clientFirebase";
 
 // context
 import { AuthContextProvider } from "../context/AuthContext";
-import { MessagingContextProvider } from "../context/MessagingContext";
 
 const GlobalStyle = createGlobalStyle`
 html,
@@ -43,14 +42,12 @@ function App({ Component, pageProps }: AppProps) {
   const app = createFirebaseApp();
 
   return (
-    <MessagingContextProvider>
-      <AuthContextProvider>
-        <GlobalStyle />
-        <ThemeProvider theme={theme}>
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </AuthContextProvider>
-    </MessagingContextProvider>
+    <AuthContextProvider>
+      <GlobalStyle />
+      <ThemeProvider theme={theme}>
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </AuthContextProvider>
   );
 }
 
