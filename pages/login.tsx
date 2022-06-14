@@ -1,24 +1,47 @@
 import type { NextPage } from "next";
+import { useRouter } from "next/router";
+import { getMessaging, getToken } from "firebase/messaging";
+import { useEffect } from "react";
 
 // components
 import { StyledText } from "../components/common/basic";
-import { useEffect } from "react";
+import PageContainer from "../components/common/page";
+
+// lib
+import { createFirebaseApp } from "../config/clientFirebase";
 
 // hooks
 import { useAuth } from "../context/AuthContext";
-import PageContainer from "../components/common/page";
 
 const Login: NextPage = () => {
-  useEffect(() => {}, []);
+  const { recaptchaVerifier, setPhoneNumber, setOTPCode, login, isLoggedIn } =
+    useAuth();
 
-  const { recaptchaVerifier, setPhoneNumber, setOTPCode, login } = useAuth();
+  const router = useRouter();
+
+  const app = createFirebaseApp();
+
+  useEffect(() => {
+    Notification.requestPermission().then(function (status) {
+      if (status === "denied") {
+        console.log("denied");
+      } else if (status === "granted") {
+        const messaging = getMessaging(app);
+
+        getToken(messaging, {
+          vapidKey:
+            "BJWKLEtkHeWx4qCG_Ddem0f-stJ2MCHGz67zNGa1d68VyilPwbhVIfqk91XrXG6rILOKY47-J_LZb1_Q1JB3my8",
+        });
+      }
+    });
+  }, []);
 
   return (
     <PageContainer>
       <StyledText>Hi, Login</StyledText>
       <div style={{}} id='sign-in-button'></div>
       <div id='recaptcha-container'></div>
-      {/* <input
+      <input
         type={"text"}
         maxLength={10}
         onChange={({ target }) => {
@@ -48,7 +71,15 @@ const Login: NextPage = () => {
         }}
       >
         Verify
-      </button> */}
+      </button>
+      <button
+        onClick={() => {
+          if (isLoggedIn) router.push("/dashboard");
+        }}
+      >
+        Dashboard
+      </button>
+      <button onClick={() => {}}>Permission</button>
     </PageContainer>
   );
 };

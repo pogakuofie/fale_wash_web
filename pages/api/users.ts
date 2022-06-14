@@ -1,4 +1,4 @@
-import dbConnect from "../../lib/dbConnect";
+import dbConnect from "../../config/dbConnect";
 import type { NextApiRequest, NextApiResponse } from "next";
 import User from "../../models/User";
 

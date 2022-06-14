@@ -6,10 +6,11 @@ import {
   getAuth,
 } from "firebase/auth";
 import parsePhoneNumber from "libphonenumber-js";
+import { RecaptchaVerifier } from "firebase/auth";
+import { useRouter } from "next/router";
 
 // config
-import { createFirebaseApp } from "../config/firebase";
-import { RecaptchaVerifier } from "firebase/auth";
+import { createFirebaseApp } from "../config/clientFirebase";
 
 const AuthContext = createContext<any>({});
 
@@ -25,19 +26,37 @@ export const AuthContextProvider = ({
   const [phoneNumber, setPhoneNumber] = useState<string | null>(null);
   const [countryCode, setCountryCode] = useState<string | null>("+233");
   const [optCode, setOTPCode] = useState<string | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
 
   const app = createFirebaseApp();
 
   const auth = getAuth(app);
 
+  const router = useRouter();
+
   auth.languageCode = "en";
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const cachedIsLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+    setIsLoggedIn(cachedIsLoggedIn);
+  }, []);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+        setIsLoggedIn(true);
+        localStorage.setItem("isLoggedIn", "true");
+      } else {
+        setUser(null);
+        setIsLoggedIn(false);
+        localStorage.removeItem("isLoggedIn");
+      }
+    });
+  }, [auth]);
 
   const sendOTP = (appVerifier: any) => {
     const parsed = parsePhoneNumber(`${countryCode}${phoneNumber}`);
-
-    const { number, isValid } = parsed || {};
 
     if (parsed?.isValid())
       signInWithPhoneNumber(auth, parsed?.number, appVerifier)
@@ -48,8 +67,10 @@ export const AuthContextProvider = ({
   };
 
   const logout = async () => {
-    setUser(null);
     await signOut(auth);
+    setUser(null);
+    setIsLoggedIn(false);
+    localStorage.removeItem("isLoggedIn");
   };
 
   const recaptchaVerifier = () => {
@@ -73,6 +94,10 @@ export const AuthContextProvider = ({
         const { user } = result;
 
         setUser(user);
+        setIsLoggedIn(true);
+        localStorage.setItem("isLoggedIn", "true");
+
+        router.push("/dashboard");
       })
       .catch((error: any) => {});
   };
@@ -80,6 +105,7 @@ export const AuthContextProvider = ({
   return (
     <AuthContext.Provider
       value={{
+        app,
         user,
         logout,
         recaptchaVerifier,
@@ -89,6 +115,7 @@ export const AuthContextProvider = ({
         setCountryCode,
         setOTPCode,
         login,
+        isLoggedIn,
       }}
     >
       {children}
