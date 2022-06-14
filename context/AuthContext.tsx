@@ -6,11 +6,11 @@ import {
   getAuth,
 } from "firebase/auth";
 import parsePhoneNumber from "libphonenumber-js";
-import { serverLogin } from "../service/auth";
+import { RecaptchaVerifier } from "firebase/auth";
+import { useRouter } from "next/router";
 
 // config
 import { createFirebaseApp } from "../config/clientFirebase";
-import { RecaptchaVerifier } from "firebase/auth";
 
 const AuthContext = createContext<any>({});
 
@@ -31,6 +31,8 @@ export const AuthContextProvider = ({
   const app = createFirebaseApp();
 
   const auth = getAuth(app);
+
+  const router = useRouter();
 
   auth.languageCode = "en";
 
@@ -94,6 +96,8 @@ export const AuthContextProvider = ({
         setUser(user);
         setIsLoggedIn(true);
         localStorage.setItem("isLoggedIn", "true");
+
+        router.push("/dashboard");
       })
       .catch((error: any) => {});
   };
@@ -101,6 +105,7 @@ export const AuthContextProvider = ({
   return (
     <AuthContext.Provider
       value={{
+        app,
         user,
         logout,
         recaptchaVerifier,

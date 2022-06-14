@@ -2,9 +2,11 @@ import type { AppProps } from "next/app";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 
 // config
+import { createFirebaseApp } from "../config/clientFirebase";
 
 // context
 import { AuthContextProvider } from "../context/AuthContext";
+import { MessagingContextProvider } from "../context/MessagingContext";
 
 const GlobalStyle = createGlobalStyle`
 html,
@@ -38,13 +40,17 @@ const theme: ThemeInterface = {
 };
 
 function App({ Component, pageProps }: AppProps) {
+  const app = createFirebaseApp();
+
   return (
-    <AuthContextProvider>
-      <GlobalStyle />
-      <ThemeProvider theme={theme}>
-        <Component {...pageProps} />
-      </ThemeProvider>
-    </AuthContextProvider>
+    <MessagingContextProvider>
+      <AuthContextProvider>
+        <GlobalStyle />
+        <ThemeProvider theme={theme}>
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </AuthContextProvider>
+    </MessagingContextProvider>
   );
 }
 

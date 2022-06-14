@@ -1,9 +1,14 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
+import { getMessaging, getToken } from "firebase/messaging";
+import { useEffect } from "react";
 
 // components
 import { StyledText } from "../components/common/basic";
 import PageContainer from "../components/common/page";
+
+// lib
+import { createFirebaseApp } from "../config/clientFirebase";
 
 // hooks
 import { useAuth } from "../context/AuthContext";
@@ -13,6 +18,23 @@ const Login: NextPage = () => {
     useAuth();
 
   const router = useRouter();
+
+  const app = createFirebaseApp();
+
+  useEffect(() => {
+    Notification.requestPermission().then(function (status) {
+      if (status === "denied") {
+        console.log("denied");
+      } else if (status === "granted") {
+        const messaging = getMessaging(app);
+
+        getToken(messaging, {
+          vapidKey:
+            "BJWKLEtkHeWx4qCG_Ddem0f-stJ2MCHGz67zNGa1d68VyilPwbhVIfqk91XrXG6rILOKY47-J_LZb1_Q1JB3my8",
+        });
+      }
+    });
+  }, []);
 
   return (
     <PageContainer>
@@ -57,6 +79,7 @@ const Login: NextPage = () => {
       >
         Dashboard
       </button>
+      <button onClick={() => {}}>Permission</button>
     </PageContainer>
   );
 };
