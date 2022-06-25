@@ -5,7 +5,7 @@ import { useEffect } from "react";
 
 // components
 import { StyledText } from "../components/common/basic";
-import PageContainer from "../components/common/page";
+import { PageContainer } from "../components/common/page";
 
 // lib
 import { createFirebaseApp } from "../config/clientFirebase";
@@ -21,20 +21,20 @@ const Login: NextPage = () => {
 
   const app = createFirebaseApp();
 
-  useEffect(() => {
-    Notification.requestPermission().then(function (status) {
-      if (status === "denied") {
-        console.log("denied");
-      } else if (status === "granted") {
-        const messaging = getMessaging(app);
+  // useEffect(() => {
+  //   Notification.requestPermission().then(function (status) {
+  //     if (status === "denied") {
+  //       console.log("denied");
+  //     } else if (status === "granted") {
+  //       const messaging = getMessaging(app);
 
-        getToken(messaging, {
-          vapidKey:
-            "BJWKLEtkHeWx4qCG_Ddem0f-stJ2MCHGz67zNGa1d68VyilPwbhVIfqk91XrXG6rILOKY47-J_LZb1_Q1JB3my8",
-        });
-      }
-    });
-  }, []);
+  //       getToken(messaging, {
+  //         vapidKey:
+  //           "BJWKLEtkHeWx4qCG_Ddem0f-stJ2MCHGz67zNGa1d68VyilPwbhVIfqk91XrXG6rILOKY47-J_LZb1_Q1JB3my8",
+  //       });
+  //     }
+  //   });
+  // }, []);
 
   return (
     <PageContainer>

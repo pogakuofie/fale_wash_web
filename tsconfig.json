@@ -20,7 +20,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "components/common/basic.ts"
+    "components/common/basic.tsx"
 , "config/dbConnect.js"  ],
   "exclude": ["node_modules"]
 }

@@ -6,7 +6,6 @@ import { createFirebaseApp } from "../config/clientFirebase";
 
 // context
 import { AuthContextProvider } from "../context/AuthContext";
-import { MessagingContextProvider } from "../context/MessagingContext";
 
 const GlobalStyle = createGlobalStyle`
 html,
@@ -15,6 +14,8 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  height:100vh;
+  overflow:hidden;
 }
 
 a {
@@ -43,14 +44,12 @@ function App({ Component, pageProps }: AppProps) {
   const app = createFirebaseApp();
 
   return (
-    <MessagingContextProvider>
-      <AuthContextProvider>
-        <GlobalStyle />
-        <ThemeProvider theme={theme}>
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </AuthContextProvider>
-    </MessagingContextProvider>
+    <AuthContextProvider>
+      <GlobalStyle />
+      <ThemeProvider theme={theme}>
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </AuthContextProvider>
   );
 }
 
