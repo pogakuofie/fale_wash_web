@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 
 // components
 import { StyledText } from "../components/common/basic";
-import PageContainer from "../components/common/page";
+import { PageContainer } from "../components/common/page";
 
 // hooks
 import { useAuth } from "../context/AuthContext";

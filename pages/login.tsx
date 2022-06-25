@@ -5,7 +5,7 @@ import { useEffect } from "react";
 
 // components
 import { StyledText } from "../components/common/basic";
-import PageContainer from "../components/common/page";
+import { PageContainer } from "../components/common/page";
 
 // lib
 import { createFirebaseApp } from "../config/clientFirebase";
