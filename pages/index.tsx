@@ -1,19 +1,35 @@
 import type { NextPage } from "next";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 // components
-import { Box, Button, Logo, StyledText } from "../components/common/basic";
+import {
+  Box,
+  Button,
+  Image,
+  Logo,
+  StyledText,
+} from "../components/common/basic";
 import { PageContainer, Pager } from "../components/common/page";
 
 // config
 
 const Home: NextPage = () => {
   const [isMobile, setIsMobile] = useState<boolean>();
-  const [mobileCarouselState, setMobileCarouselState] = useState<number>(0);
+  const [mobileCarouselState, setMobileCarouselState] = useState<boolean[]>([
+    true,
+    false,
+  ]);
+
+  const [currentCarouselStage, setCurrentCarouselStage] = useState<number>(0);
+
+  const router = useRouter();
 
   useEffect(() => {
     setMedia();
+
+    console.log(mobileCarouselState[currentCarouselStage]);
 
     window.addEventListener("resize", setMedia);
   }, []);
@@ -25,26 +41,36 @@ const Home: NextPage = () => {
   };
 
   const handleStartCTA = () => {
-    let { matches } = window.matchMedia("(max-width: 768px)");
+    if (isMobile) {
+      const moveCarousel = mobileCarouselState.map((item) => {
+        return false;
+      });
 
-    if (matches) {
+      moveCarousel[currentCarouselStage + 1] = true;
+
+      setMobileCarouselState(moveCarousel);
+
+      setCurrentCarouselStage(currentCarouselStage + 1);
+    } else {
+      router.push("/login");
     }
   };
 
   return (
-    <PageContainer padding={0}>
+    <PageContainer flexDirection={isMobile ? "row" : "column"} padding={0}>
       <Pager
+        display={isMobile ? (mobileCarouselState[0] ? "flex" : "none") : "flex"}
         flexDirection={"column"}
         backgroundImage={"../assets/images/background_logo.svg"}
         padding={16}
       >
         <Nav display={isMobile ? "none" : "flex"} padding={0}>
           <Logo height={45} width={45} src='../assets/images/logo.svg' />
-          <Menu padding={0}>
+          <Box padding={0}>
             <StyledText
               cursor={"pointer"}
               onClick={() => {
-                console.log("Hi");
+                router.push("/");
               }}
               marginLeft={14}
               size={18}
@@ -55,7 +81,7 @@ const Home: NextPage = () => {
             <StyledText
               cursor={"pointer"}
               onClick={() => {
-                console.log("Hi");
+                router.push("/");
               }}
               marginLeft={14}
               size={18}
@@ -66,7 +92,7 @@ const Home: NextPage = () => {
             <StyledText
               cursor={"pointer"}
               onClick={() => {
-                console.log("Hi");
+                router.push("/login");
               }}
               marginLeft={14}
               size={18}
@@ -74,7 +100,7 @@ const Home: NextPage = () => {
             >
               Sign In
             </StyledText>
-          </Menu>
+          </Box>
         </Nav>
         <Box
           flex={1}
@@ -132,33 +158,78 @@ const Home: NextPage = () => {
         display={isMobile ? "none" : "flex"}
         padding={0}
         flexDirection={"row"}
+        paddingTop={80}
       >
-        <Box flexDirection='column'>
-          <StyledText size={44} height={52}>
+        <Box flexDirection={"column"}>
+          <StyledText size={44} marginRight={80} height={48} margin={0}>
             Clean clothes for elegance and confidence.
           </StyledText>
-          <StyledText height={46}>
+          <StyledText
+            margin={0}
+            marginTop={24}
+            size={18}
+            marginRight={110}
+            height={22}
+          >
             We work to make your clothes clean and ready, just the way you want
             them.
           </StyledText>
         </Box>
-        <Box flexDirection='column' padding={0} backgroundColor='#34C4FA'>
-          <StyledText height={56}>
-            Clean clothes for elegance and confidence.
+        <Box padding={0} width={350} backgroundColor={"#34C4FA"}>
+          <Image
+            alt='shirt on hanger'
+            src='../assets/images/hand_hanger_shirt.svg'
+            height={"100%"}
+          />
+        </Box>
+      </Pager>
+      <Pager
+        display={isMobile ? (mobileCarouselState[1] ? "flex" : "none") : "flex"}
+        flexDirection={isMobile ? "column" : "column-reverse"}
+        paddingTop={isMobile ? 50 : 80}
+        padding={0}
+        marginTop={isMobile ? 0 : 130}
+        backgroundColor={isMobile && "#34C4FA"}
+      >
+        <Box padding={16} flexDirection={"column"}>
+          <StyledText
+            margin={0}
+            marginTop={isMobile ? 20 : 30}
+            size={isMobile ? 36 : 38}
+          >
+            Your Comfort, Our Business.
           </StyledText>
-          <StyledText height={46}>
-            We work to make your clothes clean and ready, just the way you want
-            them.
+          <StyledText size={isMobile ? 16 : 20}>
+            Too busy to get your laundry done? Well, good news, you do not have
+            to. It is why we are; you, are why we here.
           </StyledText>
         </Box>
+        <Box justifyContent={"center"} backgroundColor={"#34C4FA"}>
+          <Image
+            alt='shirt on hanger'
+            src='../assets/images/van.svg'
+            height={isMobile ? 200 : 300}
+            alignSelf={"flex-end"}
+            marginRight={isMobile ? -200 : 0}
+          />
+        </Box>
+        <Image
+          display={isMobile ? "flex" : "none"}
+          alt='back button'
+          src='../assets/images/purple_blue.svg'
+          height={150}
+          alignSelf={"flex-end"}
+          cursor={"pointer"}
+          onClick={() => {
+            console.log("Number");
+          }}
+        />
       </Pager>
     </PageContainer>
   );
 };
 
 export default Home;
-
-const Menu = styled(Box)``;
 
 const Nav = styled(Box)`
   justify-content: space-between;

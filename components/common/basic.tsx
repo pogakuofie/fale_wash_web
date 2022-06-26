@@ -5,10 +5,13 @@ const StyledText = styled.p<{
   align?: string;
   height?: number;
   margin?: number;
+  marginTop?: number;
+  marginBottom?: number;
+  marginLeft?: number;
+  marginRight?: number;
   weight?: number;
   color?: string;
   spacing?: number;
-  marginLeft?: number;
   cursor?: string;
   alignSelf?: string;
   userSelect?: string;
@@ -18,7 +21,10 @@ const StyledText = styled.p<{
   line-height: ${({ height }) => `${height}px`};
   color: ${({ color }) => color};
   margin: ${({ margin }) => `${margin}px`};
+  margin-top: ${({ marginTop }) => `${marginTop}px`};
+  margin-bottom: ${({ marginBottom }) => `${marginBottom}px`};
   margin-left: ${({ marginLeft }) => `${marginLeft}px`};
+  margin-right: ${({ marginRight }) => `${marginRight}px`};
   font-family: "Akshar", sans-serif;
   font-weight: ${({ weight }) => weight};
   letter-spacing: ${({ spacing = 0 }) => `${spacing}px`};
@@ -40,6 +46,10 @@ const Box = styled.div<{
   cursor?: string;
   flexDirection?: string;
   alignItems?: string;
+  marginBottom?: number;
+  marginTop?: number;
+  marginRight?: number;
+  paddingTop?: number;
 }>`
   display: ${({ display = "flex" }) => display};
   flex: ${({ flex }) => flex};
@@ -48,12 +58,16 @@ const Box = styled.div<{
   border-radius: ${({ borderRadius }) => `${borderRadius}px`};
   background-color: ${({ backgroundColor }) => backgroundColor};
   padding: ${({ padding = 8 }) => `${padding}px`};
+  padding-top: ${({ paddingTop }) => `${paddingTop}px`};
   background-image: ${({ backgroundImage }) => `url(${backgroundImage})`};
   background-repeat: no-repeat, repeat;
   justify-content: ${({ justifyContent }) => justifyContent};
   align-items: ${({ alignItems }) => alignItems};
   cursor: ${({ cursor = "default" }) => cursor};
   width: ${({ width }) => `${width}px`};
+  margin-top: ${({ marginTop }) => `${marginTop}px`};
+  margin-bottom: ${({ marginBottom }) => `${marginBottom}px`};
+  margin-right: ${({ marginRight }) => `${marginRight}px`};
 `;
 
 const Logo = styled.img<{
@@ -66,8 +80,8 @@ const Logo = styled.img<{
   display: ${({ display }) => display};
   align-self: ${({ alignSelf }) => alignSelf};
   margin-bottom: ${({ marginBottom }) => `${marginBottom}px`};
-  height: ${({ height = 0 }) => `${height}px`};
-  width: ${({ width = 0 }) => `${width}px`};
+  height: ${({ height }) => `${height}px`};
+  width: ${({ width }) => `${width}px`};
 `;
 
 const Button = (props: any) => {
@@ -77,11 +91,11 @@ const Button = (props: any) => {
     backgroundColor,
     width,
     padding,
-    widthDiffMobile,
     cursor,
     justifyContent,
     borderRadius,
     onClick,
+    marginBottom,
   } = props;
 
   return (
@@ -94,10 +108,27 @@ const Button = (props: any) => {
       backgroundColor={backgroundColor}
       borderRadius={borderRadius}
       cursor={cursor}
+      marginBottom={marginBottom}
     >
       {children}
     </Box>
   );
 };
 
-export { StyledText, Box, Logo, Button };
+const Image = styled.img<{
+  display?: string;
+  height?: any;
+  width?: number;
+  alignSelf?: string;
+  marginRight?: number;
+  cursor?: string;
+}>`
+  display: ${({ display }) => display};
+  height: ${({ height }) => `${height}px`};
+  width: ${({ width }) => `${width}px`};
+  align-self: ${({ alignSelf }) => alignSelf};
+  margin-right: ${({ marginRight }) => `${marginRight}px`};
+  cursor: ${({ cursor = "default" }) => cursor};
+`;
+
+export { StyledText, Box, Logo, Button, Image };
