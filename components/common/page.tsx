@@ -5,9 +5,14 @@ import { Box } from "./basic";
 import CustomHead from "./head";
 
 const PageContainer = (props: any) => {
-  const { children, title, padding } = props;
+  const { children, title, padding, paddingTop, flexDirection, width } = props;
   return (
-    <BreakPoints padding={padding}>
+    <BreakPoints
+      flexDirection={flexDirection}
+      padding={padding}
+      paddingTop={paddingTop}
+      width={width}
+    >
       <CustomHead title={title} />
       {children}
     </BreakPoints>
@@ -15,7 +20,17 @@ const PageContainer = (props: any) => {
 };
 
 const Pager = (props: any) => {
-  const { children, backgroundImage, padding, flexDirection, display } = props;
+  const {
+    children,
+    backgroundImage,
+    padding,
+    flexDirection,
+    display,
+    paddingTop,
+    backgroundColor,
+    marginTop,
+    marginRight,
+  } = props;
 
   return (
     <Page
@@ -23,6 +38,10 @@ const Pager = (props: any) => {
       padding={padding}
       flexDirection={flexDirection}
       display={display}
+      paddingTop={paddingTop}
+      backgroundColor={backgroundColor}
+      marginTop={marginTop}
+      marginRight={marginRight}
     >
       {children}
     </Page>
@@ -33,6 +52,9 @@ export { PageContainer, Pager };
 
 const Page = styled(Box)`
   display: ${({ display }) => display};
+  flex-direction: ${({ flexDirection }) => flexDirection};
+  margin-right: ${({ marginRight }) => `${marginRight}`};
+  overflow: hidden;
 
   @media only screen and (max-width: 595px) {
     height: 100vh;
@@ -61,7 +83,7 @@ const Page = styled(Box)`
 
 const BreakPoints = styled(Box)`
   display: flex;
-  flex-direction: column;
+  flex-direction: ${({ flexDirection }) => flexDirection};
 
   @media only screen and (max-width: 595px) {
     // background-color: pink;
