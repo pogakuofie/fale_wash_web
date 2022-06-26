@@ -15,10 +15,15 @@ const PageContainer = (props: any) => {
 };
 
 const Pager = (props: any) => {
-  const { children, backgroundImage, padding } = props;
+  const { children, backgroundImage, padding, flexDirection, display } = props;
 
   return (
-    <Page backgroundImage={backgroundImage} padding={padding}>
+    <Page
+      backgroundImage={backgroundImage}
+      padding={padding}
+      flexDirection={flexDirection}
+      display={display}
+    >
       {children}
     </Page>
   );
@@ -27,9 +32,7 @@ const Pager = (props: any) => {
 export { PageContainer, Pager };
 
 const Page = styled(Box)`
-  display: flex;
-  flex-direction: column;
-  padding: 16px;
+  display: ${({ display }) => display};
 
   @media only screen and (max-width: 595px) {
     height: 100vh;
@@ -74,13 +77,19 @@ const BreakPoints = styled(Box)`
 
   @media only screen and (min-width: 889px) {
     // background-color: brown;
+    margin-left: 100px;
+    margin-right: 100px;
   }
 
   @media only screen and (min-width: 1100px) {
     // background-color: green;
+    margin-left: 140px;
+    margin-right: 140px;
   }
 
   @media only screen and (min-width: 1400px) {
     // background-color: red;
+    margin-left: 280px;
+    margin-right: 280px;
   }
 `;
