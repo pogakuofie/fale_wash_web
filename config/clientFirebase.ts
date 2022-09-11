@@ -1,5 +1,6 @@
 import { initializeApp, getApps } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import { getMessaging, getToken } from "firebase/messaging";
 
 export const createFirebaseApp = () => {
   const clientCredentials = {
@@ -15,11 +16,28 @@ export const createFirebaseApp = () => {
 
   if (getApps().length <= 0) {
     const app = initializeApp(clientCredentials);
-    // Check that `window` is in scope for the analytics module!
     if (typeof window !== "undefined") {
-      // Enable analytics. https://firebase.google.com/docs/analytics/get-started
       if ("measurementId" in clientCredentials) {
         getAnalytics();
+      }
+
+      if ("messagingSenderId" in clientCredentials) {
+        if (Notification.permission === "granted") {
+          // const messaging = getMessaging(app);
+          // const token = getToken(messaging);
+        } else if (Notification.permission === "default") {
+          Notification.requestPermission().then(function (status) {
+            if (status === "denied") {
+            } else if (status === "granted") {
+              const messaging = getMessaging(app);
+
+              getToken(messaging, {
+                vapidKey:
+                  "BJWKLEtkHeWx4qCG_Ddem0f-stJ2MCHGz67zNGa1d68VyilPwbhVIfqk91XrXG6rILOKY47-J_LZb1_Q1JB3my8",
+              });
+            }
+          });
+        }
       }
     }
     return app;

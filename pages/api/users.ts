@@ -1,7 +1,11 @@
-import dbConnect from "../../lib/dbConnect";
+import dbConnect from "../../config/dbConnect";
+import type { NextApiRequest, NextApiResponse } from "next";
 import User from "../../models/User";
 
-export default async function handler(req, res) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const { method } = req;
 
   await dbConnect();
@@ -10,7 +14,10 @@ export default async function handler(req, res) {
     case "GET":
       try {
         const users = await User.find({});
-        res.status(200).json({ success: true, data: users });
+
+        const usersData = { success: true, data: users };
+
+        res.status(200).json(usersData);
       } catch (error) {
         res.status(400).json({ success: false });
       }

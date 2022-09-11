@@ -5,7 +5,9 @@ const CustomHead = (props: any) => {
 
   return (
     <Head>
-      <title>{title || "Fale Wash - Clean laundry at your doorstep"}</title>
+      <title>
+        {title || "Fale Wash - Clean Laundry. Always at your Doorstep."}
+      </title>
       <meta name='description' content={"Clean laundry at your doorstep"} />
       <link rel='icon' href='/favicon.ico' />
     </Head>

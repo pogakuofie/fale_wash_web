@@ -5,6 +5,9 @@
     "node": "16.x"
   },
   "private": true,
+  "engines": {
+    "node": "16.x"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -13,11 +16,13 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@firebase/auth": "^0.20.5",
+    "axios": "^0.27.2",
     "firebase": "^9.8.1",
     "firebase-admin": "^10.2.0",
+    "libphonenumber-js": "^1.10.6",
     "mongoose": "^6.3.3",
     "next": "12.1.6",
-    "next-firebase-auth": "^0.14.4-alpha.0",
     "next-offline": "^5.0.5",
     "next-pwa": "^5.5.2",
     "react": "18.1.0",

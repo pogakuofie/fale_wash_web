@@ -2,6 +2,7 @@ import type { AppProps } from "next/app";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 
 // config
+import { createFirebaseApp } from "../config/clientFirebase";
 
 // context
 import { AuthContextProvider } from "../context/AuthContext";
@@ -38,6 +39,8 @@ const theme: ThemeInterface = {
 };
 
 function App({ Component, pageProps }: AppProps) {
+  const app = createFirebaseApp();
+
   return (
     <AuthContextProvider>
       <GlobalStyle />

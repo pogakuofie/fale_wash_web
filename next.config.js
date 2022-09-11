@@ -8,7 +8,6 @@ const nextConfig = withPWA({
     register: true,
     skipWaiting: true,
   },
-  generateInDevMode: true,
   reactStrictMode: true,
 });
 

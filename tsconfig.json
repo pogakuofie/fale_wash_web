@@ -16,6 +16,11 @@
     "incremental": true,
     "removeComments": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/common/basic.js"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "components/common/basic.tsx"
+, "config/dbConnect.js"  ],
   "exclude": ["node_modules"]
 }

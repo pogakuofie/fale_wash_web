@@ -34,3 +34,6 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+# firebase
+fale-wash-a6707-firebase-adminsdk-41rt2-333af40c41.json
