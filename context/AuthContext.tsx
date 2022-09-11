@@ -4,6 +4,7 @@ import {
   signInWithPhoneNumber,
   signOut,
   getAuth,
+  signInAnonymously,
 } from "firebase/auth";
 import parsePhoneNumber from "libphonenumber-js";
 import { RecaptchaVerifier } from "firebase/auth";
@@ -102,6 +103,18 @@ export const AuthContextProvider = ({
       .catch((error: any) => {});
   };
 
+  const anonSignIn = () => {
+    signInAnonymously(auth)
+      .then(() => {
+        // Signed in..
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ...
+      });
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -116,6 +129,7 @@ export const AuthContextProvider = ({
         setOTPCode,
         login,
         isLoggedIn,
+        anonSignIn,
       }}
     >
       {children}

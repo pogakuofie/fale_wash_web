@@ -49,7 +49,11 @@ const Box = styled.div<{
   marginBottom?: number;
   marginTop?: number;
   marginRight?: number;
+  marginLeft?: number;
   paddingTop?: number;
+  paddingLeft?: number;
+  paddingRight?: number;
+  paddingBottom?: number;
 }>`
   display: ${({ display = "flex" }) => display};
   flex: ${({ flex }) => flex};
@@ -68,6 +72,10 @@ const Box = styled.div<{
   margin-top: ${({ marginTop }) => `${marginTop}px`};
   margin-bottom: ${({ marginBottom }) => `${marginBottom}px`};
   margin-right: ${({ marginRight }) => `${marginRight}px`};
+  margin-left: ${({ marginLeft }) => `${marginLeft}px`};
+  padding-right: ${({ paddingLeft }) => `${paddingLeft}px`};
+  padding-left: ${({ paddingRight }) => `${paddingRight}px`};
+  padding-bottom: ${({ paddingBottom }) => `${paddingBottom}px`};
 `;
 
 const Logo = styled.img<{
@@ -84,20 +92,19 @@ const Logo = styled.img<{
   width: ${({ width }) => `${width}px`};
 `;
 
-const Button = (props: any) => {
-  const {
-    children,
-    height,
-    backgroundColor,
-    width,
-    padding,
-    cursor,
-    justifyContent,
-    borderRadius,
-    onClick,
-    marginBottom,
-  } = props;
-
+const Button = ({
+  children,
+  height,
+  backgroundColor,
+  width,
+  padding,
+  cursor,
+  justifyContent,
+  borderRadius,
+  onClick,
+  marginBottom,
+  style,
+}: any) => {
   return (
     <Box
       onClick={onClick}
@@ -109,6 +116,7 @@ const Button = (props: any) => {
       borderRadius={borderRadius}
       cursor={cursor}
       marginBottom={marginBottom}
+      style={style}
     >
       {children}
     </Box>
@@ -120,15 +128,35 @@ const Image = styled.img<{
   height?: any;
   width?: number;
   alignSelf?: string;
+  margin?: number;
   marginRight?: number;
+  marginBottom?: number;
   cursor?: string;
 }>`
   display: ${({ display }) => display};
   height: ${({ height }) => `${height}px`};
   width: ${({ width }) => `${width}px`};
   align-self: ${({ alignSelf }) => alignSelf};
+  margin: ${({ margin }) => `${margin}px`};
   margin-right: ${({ marginRight }) => `${marginRight}px`};
+  margin-bottom: ${({ marginBottom }) => `${marginBottom}px`};
   cursor: ${({ cursor = "default" }) => cursor};
 `;
 
-export { StyledText, Box, Logo, Button, Image };
+const Input = styled.input<{
+  margin?: number;
+  marginTop?: number;
+  width?: number;
+  height?: number;
+}>`
+  border: none;
+  background-color: #eeeeee;
+  height:  ${({ height = 33 }) => `${(height = 33)}px`};
+  margin: : ${({ margin }) => `${margin}px`};
+  margin-top: ${({ marginTop }) => `${marginTop}px`};
+  padding-left: 5px;
+  font-family: "Akshar", sans-serif;
+  width:${({ width = 800 }) => `${width}px`};
+`;
+
+export { StyledText, Box, Logo, Button, Image, Input };
