@@ -27,7 +27,7 @@ const Home: NextPage = () => {
     false,
   ]);
 
-  const { anonSignIn } = useAuth();
+  const { setPhoneNumber, recaptchaVerifier } = useAuth();
 
   const [currentCarouselStage, setCurrentCarouselStage] = useState<number>(0);
 
@@ -286,6 +286,11 @@ const Home: NextPage = () => {
           <Box alignItems='center' justifyContent='center' padding={0}>
             <CountryPicker />
             <Input
+              onChange={({ target }) => {
+                const { value } = target;
+
+                setPhoneNumber(value);
+              }}
               marginTop={5}
               placeholder={"Enter your mobile number"}
               style={{
@@ -304,7 +309,9 @@ const Home: NextPage = () => {
             cursor={"pointer"}
             borderRadius={5}
             justifyContent={"center"}
-            onClick={() => {}}
+            onClick={() => {
+              recaptchaVerifier();
+            }}
           >
             <StyledText
               cursor={"pointer"}
@@ -319,6 +326,7 @@ const Home: NextPage = () => {
           </Button>
         </Box>
       </Pager>
+      <Box id='recaptcha-container'></Box>
     </PageContainer>
   );
 };
